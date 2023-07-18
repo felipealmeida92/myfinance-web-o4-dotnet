@@ -34,7 +34,7 @@ Para realizar a inicialização do projeto, siga os seguintes procedimentos:
 - [.Net 7](https://dotnet.microsoft.com/pt-br/download)
 OBS: Você pode verificar se foi instalado, com o comando ```dotnet --version```, pelo terminal
 
-3 Executar o script de criação do banco de dados no MySql Server Studio (/docs/Mysql.sql);
+3 Executar o script de criação do banco de dados no MySql Server Management Studio (/docs/Mysql.sql);
 
 4 Injetar biblioteca mySQL no arquivo dotnet
 
@@ -44,14 +44,18 @@ OBS: Você pode verificar se foi instalado, com o comando ```dotnet --version```
 
 (```add package microsoft.entityframeworkcore.mysql```)
 
-6 Acessar a pasta do projeto
+6 No arquivo MyFinanceDbContext.cs, o nome do server na variável abaixo, deve ser alterado conforme está na configuração do seu MySQL Server Management Studio
+
+```var connectionString = @"Server=('NOME_SERVER');Database=myfinance;Trusted_Connection=True;TrustServerCertificate=True";```
+
+7 Acessar a pasta do projeto
     
 ```cd myfinance-web-o4-dotnet```
 
-7 Executar o comando
+8 Executar o comando
 
 ```dotnet build && donet run```
 
-8 Abrir o projeto no navegador, na porta 7024
+9 Abrir o projeto no navegador, na porta 7024
 
 URL: https://localhost:7024/

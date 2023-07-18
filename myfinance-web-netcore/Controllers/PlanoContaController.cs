@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myfinance_web_netcore.Domain;
 using myfinance_web_netcore.Models;
+using myfinance_web_netcore.Application.ObterPlanoConta;
 
 namespace myfinance_web_netcore.Controllers
 {
@@ -10,34 +11,23 @@ namespace myfinance_web_netcore.Controllers
     {
         private readonly ILogger<PlanoContaController> _logger;
         private readonly MyFinanceDbContext _myFinanceDbContext;
+        private readonly IObterPlanoConta _obterPlanoConta;
 
         public PlanoContaController(
             ILogger<PlanoContaController> logger,
-            MyFinanceDbContext myFinanceDbContext)
+            MyFinanceDbContext myFinanceDbContext,
+            IObterPlanoConta obterPlanoConta
+        )
         {
             _logger = logger;
             _myFinanceDbContext = myFinanceDbContext;
+            _obterPlanoConta = obterPlanoConta;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var listaPlanoContas = _myFinanceDbContext.PlanoConta;
-            var listaPlanoContaModel = new List<PlanoContaModel>();
-
-            foreach (var item in listaPlanoContas){
-                var planoContaModel = new PlanoContaModel()
-                {
-                    Id = item.Id,
-                    Descricao = item.Descricao,
-                    Tipo = item.Tipo
-                };
-
-                listaPlanoContaModel.Add(planoContaModel);
-            }
-
-            ViewBag.ListaPlanoConta = listaPlanoContaModel;
-
+            ViewBag.listaPlanoConta = _obterPlanoConta.GetListaPlanoContaModel();
             return View();
         }
 
